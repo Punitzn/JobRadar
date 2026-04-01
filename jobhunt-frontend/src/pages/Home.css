@@ -156,10 +156,10 @@
   position: sticky;
   top: 0;
   width: 100%;
-  height: 100vh;
+  height: 100dvh;
   z-index: 1;
   will-change: opacity, transform;
-  background: #000;
+  background: transparent;
 }
 
 .hero-fullscreen iframe, .hero-fullscreen canvas {
@@ -167,6 +167,21 @@
   height: 100%;
   border: none;
   display: block;
+  background: transparent;
+}
+
+/* ── Mobile Spline Optimization ── */
+@media (max-width: 768px) and (orientation: portrait) {
+  .hero-fullscreen {
+    /* Set a dark background that matches typical Spline scenes or masks the seam */
+    background: #e6e6e6; /* Roughly matches the nexbot environment color from Spline */
+  }
+  .hero-fullscreen iframe, .hero-fullscreen canvas {
+    /* Scale it slightly so it cuts out the broken "HUNT" text, or use object-fit if it's a fixed canvas. 
+       Since Spline uses Cover, we can make it artificially wider so it zooms out horizontally! */
+    width: 200%;
+    margin-left: -50%;
+  }
 }
 
 /* ── Hero Content Section (Scroll down) ── */
