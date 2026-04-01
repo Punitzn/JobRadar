@@ -1,0 +1,19 @@
+/* ── Dashboard Layout with Sidebar ── */
+.dashboard {
+  min-height: 100vh;
+  background: var(--bg-surface);
+}
+
+.dashboard-content {
+  margin-left: var(--sidebar-width);
+  min-height: 100vh;
+  padding: var(--space-xl) var(--space-2xl);
+}
+
+@media (max-width: 768px) {
+  .dashboard-content {
+    margin-left: 0;
+    padding: var(--space-md);
+    padding-bottom: 80px; /* mobile tab bar */
+  }
+}

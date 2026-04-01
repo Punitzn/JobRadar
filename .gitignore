@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+jobhunt-frontend/node_modules/
+
+# Environment variables (SENSITIVE)
+.env
+.env.local
+.env.production
+
+# Build output
+dist/
+jobhunt-frontend/dist/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
