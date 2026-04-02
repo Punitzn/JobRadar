@@ -6,6 +6,7 @@ import morgan from 'morgan'
 import cookieParser from 'cookie-parser'
 import rateLimit from 'express-rate-limit'
 import cron from 'node-cron'
+import axios from 'axios'
 
 import connectDB from './config/db.js'
 import authRoutes from './routes/auth.js'
@@ -77,10 +78,34 @@ cron.schedule('0 2 * * *', () => {
   scrapeAllCompanies()
 })
 
+// ── Render Free Tier Keep-Awake ─────────────────────────────────────────────
+const pingSelf = async () => {
+  const url = process.env.RENDER_EXTERNAL_URL || `http://localhost:${PORT}`
+  if (process.env.NODE_ENV !== 'production' && !process.env.RENDER_EXTERNAL_URL) return
+
+  try {
+    const { data } = await axios.get(`${url.endsWith('/') ? url : url + '/' }health`)
+    console.log(`🌐 Keep-alive ping successful: ${data.status} at ${new Date().toISOString()}`)
+  } catch (err) {
+    console.error(`❌ Keep-alive ping failed: ${err.message}`)
+  }
+}
+
+// Ping every 14 minutes (Render sleeps after 15 mins)
+if (process.env.NODE_ENV === 'production') {
+  setInterval(pingSelf, 14 * 60 * 1000)
+  // Initial ping after 30s to confirm it's working
+  setTimeout(pingSelf, 30000)
+}
+
 // ── Start ─────────────────────────────────────────────────────────────────────
-connectDB().then(() => {
-  app.listen(PORT, () => {
+// Connect to DB (don't block the server startup)
+connectDB().catch(err => {
+    console.error('❌ Delayed DB Connection Error:', err.message)
+})
+
+// Listen immediately so Render sees the app as "Live"
+app.listen(PORT, () => {
     console.log(`🚀 JobRadar backend running on http://localhost:${PORT}`)
     console.log(`📡 Environment: ${process.env.NODE_ENV}`)
-  })
 })

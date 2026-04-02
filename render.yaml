@@ -1,0 +1,32 @@
+services:
+  # Frontend Static Site
+  - type: static
+    name: jobhunt-frontend
+    env: static
+    buildCommand: npm install && npm run build
+    publishPath: ./dist
+    routes:
+      # This is the "Magic Fix" for 404 on refresh!
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+
+  # Backend Web Service
+  - type: web
+    name: jobradar-backend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # This keeps the backend awake using our ping script
+      - key: RENDER_EXTERNAL_URL
+        fromService:
+          name: jobradar-backend
+          type: web
+          property: host

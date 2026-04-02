@@ -87,6 +87,20 @@ export default function Home() {
           id="hero-fullscreen"
           style={{ opacity: splineOpacity, scale: splineScale, y: splineY }}
         >
+          {/* ── High-Fidelity Loading Overlay ── */}
+          {!splineLoaded && (
+            <div className="radar-loader-overlay">
+              <div className="radar-circle">
+                <div className="radar-sweep" />
+                <div className="radar-ping" />
+              </div>
+              <div className="radar-text">
+                <span className="loading-label">INITIALIZING RADAR</span>
+                <span className="loading-status">Waking up systems...</span>
+              </div>
+            </div>
+          )}
+
           <ErrorBoundary
             fallback={
               <iframe
