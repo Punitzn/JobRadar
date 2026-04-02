@@ -43,6 +43,11 @@ const apiLimiter = rateLimit({
   max: 200,
 })
 
+// ── Health Check (Exempt from limiter) ────────────────────────────────────────
+app.get('/health', (_, res) =>
+  res.json({ status: 'ok', env: process.env.NODE_ENV, time: new Date().toISOString() })
+)
+
 app.use('/api/auth', authLimiter)
 app.use('/api', apiLimiter)
 
@@ -53,10 +58,6 @@ app.use('/api/users', userRoutes)
 app.use('/api/sync', syncRoutes)
 app.use('/api/jobs', jobRoutes)
 
-// ── Health Check ──────────────────────────────────────────────────────────────
-app.get('/health', (_, res) =>
-  res.json({ status: 'ok', env: process.env.NODE_ENV, time: new Date().toISOString() })
-)
 
 // ── 404 Handler ───────────────────────────────────────────────────────────────
 app.use((req, res) =>
