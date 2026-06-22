@@ -1,16 +1,97 @@
-# React + Vite
+# JobRadar
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A crowdsourced job-hunting intelligence platform for Indian CS students and tech job seekers. JobRadar aggregates community-reported hiring data to surface company ghost rates, hiring trends, and application outcome patterns — helping candidates apply smarter, not harder.
 
-Currently, two official plugins are available:
+**[Live Demo](https://your-live-link.vercel.app)** · **[Backend API](https://your-backend-link.com)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## What it does
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Most job boards show you open roles. JobRadar shows you what actually happens after you apply.
 
-## Expanding the ESLint configuration
+- **Heatmap visualization** of hiring activity and ghost rates across companies in the Indian tech market
+- **Crowdsourced data ingestion** — users report their application outcomes (applied, ghosted, interviewed, offered)
+- **Filtering and analytics** — filter by company, role type, experience level, and time period
+- **Aggregated insights** — see which companies are actively hiring vs which ones ghost most applicants
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | React.js, Vite |
+| Backend | Node.js, Express.js |
+| Database | MongoDB Atlas |
+| Querying | MongoDB Aggregation Pipelines |
+| Deployment | Vercel (frontend), Render (backend) |
+
+---
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/api/reports` | Submit a job application outcome |
+| `GET` | `/api/companies` | Get all companies with aggregated stats |
+| `GET` | `/api/companies/:id` | Get detailed stats for a specific company |
+| `GET` | `/api/analytics/heatmap` | Get heatmap data — ghost rates by company/time |
+| `GET` | `/api/analytics/trends` | Get hiring trend data across the market |
+
+---
+
+## Running locally
+
+### Prerequisites
+- Node.js v18+
+- MongoDB Atlas URI (free tier works)
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/Punitzn/jobradar.git
+cd jobradar
+```
+
+### 2. Setup backend
+
+```bash
+cd server
+npm install
+cp .env.example .env
+# Fill in MONGODB_URI and PORT in .env
+npm run dev
+```
+
+### 3. Setup frontend
+
+```bash
+cd client
+npm install
+npm run dev
+```
+
+Frontend runs at `http://localhost:5173`, backend at `http://localhost:5000`
+
+---
+
+## Environment variables
+
+```env
+MONGODB_URI=your_mongodb_atlas_connection_string
+PORT=5000
+CLIENT_URL=http://localhost:5173
+```
+
+---
+
+## Project status
+
+Actively maintained. Beta users onboarded from MBM University and Indian CS student communities. Iterating based on user feedback.
+
+---
+
+## Author
+
+**Punit Jain** — [LinkedIn](https://linkedin.com/in/punit-jain) · [GitHub](https://github.com/Punitzn)
